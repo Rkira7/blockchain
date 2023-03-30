@@ -1,9 +1,21 @@
+import 'package:blockchain/app/data/repositories_impl/exchange_repository_impl.dart';
+import 'package:blockchain/app/data/services/remote/exchage_api.dart';
+import 'package:blockchain/app/domain/repositories/exchange_repository.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 
 import 'app/my_app.dart';
 
 void main() {
   runApp(
-    const MyApp(),
+    MultiProvider(
+      providers: [
+        Provider<ExchangeRepository>(
+          create: (_) => ExchangeRepositoryImpl(
+            ExchangeAPI(Client())
+          ),)
+      ],
+      child: const MyApp()),
   );
 }
