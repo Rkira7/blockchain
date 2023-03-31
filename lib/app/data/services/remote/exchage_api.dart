@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:blockchain/app/domain/failures/http_request_failure.dart';
-import 'package:blockchain/app/domain/models/crypto/crypto.dart';
-import 'package:blockchain/app/domain/results/get_prices/get_prices_result.dart';
+import '../../../domain/either/either.dart';
+import '../../../domain/repositories/exchange_repository.dart';
+
+import '../../../domain/failures/http_request_failure.dart';
+import '../../../domain/models/crypto/crypto.dart';
 import 'package:http/http.dart';
 
 class ExchangeAPI {
@@ -11,7 +13,7 @@ class ExchangeAPI {
 
   ExchangeAPI(this._client);
 
-  Future<GetPricesResult> getPrices(List<String> ids) async {
+  GetPriceFuture getPrices(List<String> ids) async {
     try {
       final response = await _client.get(
           Uri.parse(
@@ -21,12 +23,12 @@ class ExchangeAPI {
         final json = jsonDecode(response.body);
         final cryptos =  (json['data'] as List).map(
             (e) => Crypto(
-                id: e["id"],
-                symbol: e["symbol"],
-                price: double.parse(e["priceUsd"]))
+                id: e['id'],
+                symbol: e['symbol'],
+                price: double.parse(e['priceUsd']))
         );
 
-        return GetPricesSuccess(cryptos.toList());
+        return Right(cryptos.toList());
       }
 
       if(response.statusCode == 404){
@@ -48,7 +50,7 @@ class ExchangeAPI {
       else{
         failure = HttpRequestFailure.local;
       }
-      return GetPricesFailure(failure);
+      return Left(failure);
     }
   }
 }
