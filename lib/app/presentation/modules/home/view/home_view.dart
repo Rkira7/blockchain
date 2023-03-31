@@ -1,3 +1,5 @@
+import 'package:blockchain/app/domain/failures/http_request_failure.dart';
+
 import '../../../../domain/repositories/exchange_repository.dart';
 import '../bloc/home_bloc.dart';
 import '../bloc/home_state.dart';
@@ -20,7 +22,17 @@ class HomeView extends StatelessWidget {
           return Scaffold(
             body: bloc.state.when(
                 loading: () => const Center(child: CircularProgressIndicator()),
-                failed: () => const Center(child: Text('Error')),
+                failed: (failure){
+                  final String message = failure.when(
+                      network: () => 'Verifica tu internet',
+                      notFound: () => 'Informacion no encontrada',
+                      server: () => 'Error interno del servidor',
+                      unauthorized: () => 'Sin autorizacion',
+                      badRequest: () =>'No se realizo la peticion',
+                      local: () =>'Error desconocido');
+
+                  return  Center(child: Text(message));
+                },
                 loaded: (crypto) => ListView.builder(
                   itemCount: crypto.length, // EN EST ESTADO SI TIENE LA VARIABLE CRYPTO
                   itemBuilder: (_, index){

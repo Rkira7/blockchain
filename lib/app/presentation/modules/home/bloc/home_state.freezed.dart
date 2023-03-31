@@ -19,21 +19,21 @@ mixin _$HomeState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() failed,
+    required TResult Function(HttpRequestFailure failure) failed,
     required TResult Function(List<Crypto> crypto) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
     required TResult orElse(),
   }) =>
@@ -117,7 +117,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() failed,
+    required TResult Function(HttpRequestFailure failure) failed,
     required TResult Function(List<Crypto> crypto) loaded,
   }) {
     return loading();
@@ -127,7 +127,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
   }) {
     return loading?.call();
@@ -137,7 +137,7 @@ class _$_Loading implements _Loading {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
     required TResult orElse(),
   }) {
@@ -190,6 +190,9 @@ abstract class _Loading implements HomeState {
 abstract class _$$_FailedCopyWith<$Res> {
   factory _$$_FailedCopyWith(_$_Failed value, $Res Function(_$_Failed) then) =
       __$$_FailedCopyWithImpl<$Res>;
+  $Res call({HttpRequestFailure failure});
+
+  $HttpRequestFailureCopyWith<$Res> get failure;
 }
 
 /// @nodoc
@@ -200,57 +203,87 @@ class __$$_FailedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 
   @override
   _$_Failed get _value => super._value as _$_Failed;
+
+  @override
+  $Res call({
+    Object? failure = freezed,
+  }) {
+    return _then(_$_Failed(
+      failure == freezed
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as HttpRequestFailure,
+    ));
+  }
+
+  @override
+  $HttpRequestFailureCopyWith<$Res> get failure {
+    return $HttpRequestFailureCopyWith<$Res>(_value.failure, (value) {
+      return _then(_value.copyWith(failure: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$_Failed implements _Failed {
-  _$_Failed();
+  _$_Failed(this.failure);
+
+  @override
+  final HttpRequestFailure failure;
 
   @override
   String toString() {
-    return 'HomeState.failed()';
+    return 'HomeState.failed(failure: $failure)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Failed);
+        (other.runtimeType == runtimeType &&
+            other is _$_Failed &&
+            const DeepCollectionEquality().equals(other.failure, failure));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(failure));
+
+  @JsonKey(ignore: true)
+  @override
+  _$$_FailedCopyWith<_$_Failed> get copyWith =>
+      __$$_FailedCopyWithImpl<_$_Failed>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() failed,
+    required TResult Function(HttpRequestFailure failure) failed,
     required TResult Function(List<Crypto> crypto) loaded,
   }) {
-    return failed();
+    return failed(failure);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
   }) {
-    return failed?.call();
+    return failed?.call(failure);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
     required TResult orElse(),
   }) {
     if (failed != null) {
-      return failed();
+      return failed(failure);
     }
     return orElse();
   }
@@ -291,7 +324,12 @@ class _$_Failed implements _Failed {
 }
 
 abstract class _Failed implements HomeState {
-  factory _Failed() = _$_Failed;
+  factory _Failed(final HttpRequestFailure failure) = _$_Failed;
+
+  HttpRequestFailure get failure;
+  @JsonKey(ignore: true)
+  _$$_FailedCopyWith<_$_Failed> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -361,7 +399,7 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
-    required TResult Function() failed,
+    required TResult Function(HttpRequestFailure failure) failed,
     required TResult Function(List<Crypto> crypto) loaded,
   }) {
     return loaded(crypto);
@@ -371,7 +409,7 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
   }) {
     return loaded?.call(crypto);
@@ -381,7 +419,7 @@ class _$_Loaded implements _Loaded {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
-    TResult Function()? failed,
+    TResult Function(HttpRequestFailure failure)? failed,
     TResult Function(List<Crypto> crypto)? loaded,
     required TResult orElse(),
   }) {

@@ -32,12 +32,12 @@ class ExchangeAPI {
       }
 
       if(response.statusCode == 404){
-        throw HttpRequestFailure.notFound;
+        throw HttpRequestFailure.notFound();
       }
       if(response.statusCode >= 500){
-        throw HttpRequestFailure.server;
+        throw HttpRequestFailure.server();
       }
-      throw HttpRequestFailure.local;
+      throw HttpRequestFailure.local();
 
     }
     catch(e){
@@ -45,10 +45,10 @@ class ExchangeAPI {
       if(e is HttpRequestFailure){
         failure = e;
       }else if(e is SocketException || e is ClientException){
-        failure = HttpRequestFailure.network;
+        failure = HttpRequestFailure.network();
       }
       else{
-        failure = HttpRequestFailure.local;
+        failure = HttpRequestFailure.local();
       }
       return Either.left(failure);
     }
