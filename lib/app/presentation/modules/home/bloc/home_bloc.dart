@@ -8,21 +8,25 @@ class HomeBloc extends ChangeNotifier{
   });
   final ExchangeRepository exchangeRepository;
 
-  HomeState _state = HomeStateLoading();
+  HomeState _state = HomeState.loading();
 
   HomeState get state => _state;
 
   Future<void> init()async{
-    if(state is! HomeStateLoading){
-      _state = HomeStateLoading();
-      notifyListeners();
-    }
+    state.maybeWhen(
+        loading: () {},
+        orElse: () {
+          _state = HomeState.loading();
+          notifyListeners();
+        }
+    );
+
    final result = await exchangeRepository.getPrices(
        ['bitcoin', 'litecoin','usd-coin', 'dogecoin']);
 
     _state = result.when(
-        left: (_) => HomeStateFailed(),
-        right: (crypto) => HomeStateLoaded(crypto)
+        left: (_) => HomeState.failed(),
+        right: (crypto) => HomeState.loaded(crypto)
     );
 
     notifyListeners();

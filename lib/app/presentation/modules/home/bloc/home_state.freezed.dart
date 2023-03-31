@@ -40,23 +40,23 @@ mixin _$HomeState {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateFailed value) failed,
-    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Loaded value) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -78,28 +78,26 @@ class _$HomeStateCopyWithImpl<$Res> implements $HomeStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$HomeStateLoadingCopyWith<$Res> {
-  factory _$$HomeStateLoadingCopyWith(
-          _$HomeStateLoading value, $Res Function(_$HomeStateLoading) then) =
-      __$$HomeStateLoadingCopyWithImpl<$Res>;
+abstract class _$$_LoadingCopyWith<$Res> {
+  factory _$$_LoadingCopyWith(
+          _$_Loading value, $Res Function(_$_Loading) then) =
+      __$$_LoadingCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HomeStateLoadingCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
-    implements _$$HomeStateLoadingCopyWith<$Res> {
-  __$$HomeStateLoadingCopyWithImpl(
-      _$HomeStateLoading _value, $Res Function(_$HomeStateLoading) _then)
-      : super(_value, (v) => _then(v as _$HomeStateLoading));
+class __$$_LoadingCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$_LoadingCopyWith<$Res> {
+  __$$_LoadingCopyWithImpl(_$_Loading _value, $Res Function(_$_Loading) _then)
+      : super(_value, (v) => _then(v as _$_Loading));
 
   @override
-  _$HomeStateLoading get _value => super._value as _$HomeStateLoading;
+  _$_Loading get _value => super._value as _$_Loading;
 }
 
 /// @nodoc
 
-class _$HomeStateLoading implements HomeStateLoading {
-  _$HomeStateLoading();
+class _$_Loading implements _Loading {
+  _$_Loading();
 
   @override
   String toString() {
@@ -109,7 +107,7 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeStateLoading);
+        (other.runtimeType == runtimeType && other is _$_Loading);
   }
 
   @override
@@ -152,9 +150,9 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateFailed value) failed,
-    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Loaded value) loaded,
   }) {
     return loading(this);
   }
@@ -162,9 +160,9 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
   }) {
     return loading?.call(this);
   }
@@ -172,9 +170,9 @@ class _$HomeStateLoading implements HomeStateLoading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -184,33 +182,30 @@ class _$HomeStateLoading implements HomeStateLoading {
   }
 }
 
-abstract class HomeStateLoading implements HomeState {
-  factory HomeStateLoading() = _$HomeStateLoading;
+abstract class _Loading implements HomeState {
+  factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
-abstract class _$$HomeStateFailedCopyWith<$Res> {
-  factory _$$HomeStateFailedCopyWith(
-          _$HomeStateFailed value, $Res Function(_$HomeStateFailed) then) =
-      __$$HomeStateFailedCopyWithImpl<$Res>;
+abstract class _$$_FailedCopyWith<$Res> {
+  factory _$$_FailedCopyWith(_$_Failed value, $Res Function(_$_Failed) then) =
+      __$$_FailedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$HomeStateFailedCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
-    implements _$$HomeStateFailedCopyWith<$Res> {
-  __$$HomeStateFailedCopyWithImpl(
-      _$HomeStateFailed _value, $Res Function(_$HomeStateFailed) _then)
-      : super(_value, (v) => _then(v as _$HomeStateFailed));
+class __$$_FailedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$_FailedCopyWith<$Res> {
+  __$$_FailedCopyWithImpl(_$_Failed _value, $Res Function(_$_Failed) _then)
+      : super(_value, (v) => _then(v as _$_Failed));
 
   @override
-  _$HomeStateFailed get _value => super._value as _$HomeStateFailed;
+  _$_Failed get _value => super._value as _$_Failed;
 }
 
 /// @nodoc
 
-class _$HomeStateFailed implements HomeStateFailed {
-  _$HomeStateFailed();
+class _$_Failed implements _Failed {
+  _$_Failed();
 
   @override
   String toString() {
@@ -220,7 +215,7 @@ class _$HomeStateFailed implements HomeStateFailed {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$HomeStateFailed);
+        (other.runtimeType == runtimeType && other is _$_Failed);
   }
 
   @override
@@ -263,9 +258,9 @@ class _$HomeStateFailed implements HomeStateFailed {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateFailed value) failed,
-    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Loaded value) loaded,
   }) {
     return failed(this);
   }
@@ -273,9 +268,9 @@ class _$HomeStateFailed implements HomeStateFailed {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
   }) {
     return failed?.call(this);
   }
@@ -283,9 +278,9 @@ class _$HomeStateFailed implements HomeStateFailed {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -295,34 +290,31 @@ class _$HomeStateFailed implements HomeStateFailed {
   }
 }
 
-abstract class HomeStateFailed implements HomeState {
-  factory HomeStateFailed() = _$HomeStateFailed;
+abstract class _Failed implements HomeState {
+  factory _Failed() = _$_Failed;
 }
 
 /// @nodoc
-abstract class _$$HomeStateLoadedCopyWith<$Res> {
-  factory _$$HomeStateLoadedCopyWith(
-          _$HomeStateLoaded value, $Res Function(_$HomeStateLoaded) then) =
-      __$$HomeStateLoadedCopyWithImpl<$Res>;
+abstract class _$$_LoadedCopyWith<$Res> {
+  factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
+      __$$_LoadedCopyWithImpl<$Res>;
   $Res call({List<Crypto> crypto});
 }
 
 /// @nodoc
-class __$$HomeStateLoadedCopyWithImpl<$Res>
-    extends _$HomeStateCopyWithImpl<$Res>
-    implements _$$HomeStateLoadedCopyWith<$Res> {
-  __$$HomeStateLoadedCopyWithImpl(
-      _$HomeStateLoaded _value, $Res Function(_$HomeStateLoaded) _then)
-      : super(_value, (v) => _then(v as _$HomeStateLoaded));
+class __$$_LoadedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
+    implements _$$_LoadedCopyWith<$Res> {
+  __$$_LoadedCopyWithImpl(_$_Loaded _value, $Res Function(_$_Loaded) _then)
+      : super(_value, (v) => _then(v as _$_Loaded));
 
   @override
-  _$HomeStateLoaded get _value => super._value as _$HomeStateLoaded;
+  _$_Loaded get _value => super._value as _$_Loaded;
 
   @override
   $Res call({
     Object? crypto = freezed,
   }) {
-    return _then(_$HomeStateLoaded(
+    return _then(_$_Loaded(
       crypto == freezed
           ? _value._crypto
           : crypto // ignore: cast_nullable_to_non_nullable
@@ -333,8 +325,8 @@ class __$$HomeStateLoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$HomeStateLoaded implements HomeStateLoaded {
-  _$HomeStateLoaded(final List<Crypto> crypto) : _crypto = crypto;
+class _$_Loaded implements _Loaded {
+  _$_Loaded(final List<Crypto> crypto) : _crypto = crypto;
 
   final List<Crypto> _crypto;
   @override
@@ -352,7 +344,7 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$HomeStateLoaded &&
+            other is _$_Loaded &&
             const DeepCollectionEquality().equals(other._crypto, _crypto));
   }
 
@@ -362,8 +354,8 @@ class _$HomeStateLoaded implements HomeStateLoaded {
 
   @JsonKey(ignore: true)
   @override
-  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
-      __$$HomeStateLoadedCopyWithImpl<_$HomeStateLoaded>(this, _$identity);
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
+      __$$_LoadedCopyWithImpl<_$_Loaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -402,9 +394,9 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(HomeStateLoading value) loading,
-    required TResult Function(HomeStateFailed value) failed,
-    required TResult Function(HomeStateLoaded value) loaded,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Failed value) failed,
+    required TResult Function(_Loaded value) loaded,
   }) {
     return loaded(this);
   }
@@ -412,9 +404,9 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
   }) {
     return loaded?.call(this);
   }
@@ -422,9 +414,9 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(HomeStateLoading value)? loading,
-    TResult Function(HomeStateFailed value)? failed,
-    TResult Function(HomeStateLoaded value)? loaded,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Failed value)? failed,
+    TResult Function(_Loaded value)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -434,11 +426,11 @@ class _$HomeStateLoaded implements HomeStateLoaded {
   }
 }
 
-abstract class HomeStateLoaded implements HomeState {
-  factory HomeStateLoaded(final List<Crypto> crypto) = _$HomeStateLoaded;
+abstract class _Loaded implements HomeState {
+  factory _Loaded(final List<Crypto> crypto) = _$_Loaded;
 
   List<Crypto> get crypto;
   @JsonKey(ignore: true)
-  _$$HomeStateLoadedCopyWith<_$HomeStateLoaded> get copyWith =>
+  _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -28,7 +28,7 @@ class ExchangeAPI {
                 price: double.parse(e['priceUsd']))
         );
 
-        return Right(cryptos.toList());
+        return Either.right(cryptos.toList());
       }
 
       if(response.statusCode == 404){
@@ -50,7 +50,7 @@ class ExchangeAPI {
       else{
         failure = HttpRequestFailure.local;
       }
-      return Left(failure);
+      return Either.left(failure);
     }
   }
 }
