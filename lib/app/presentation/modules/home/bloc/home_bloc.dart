@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:blockchain/app/domain/models/crypto/crypto.dart';
+
 import '../../../../domain/repositories/ws_repository.dart';
 import '../../../../domain/repositories/exchange_repository.dart';
 import 'home_state.dart';
@@ -75,9 +77,26 @@ class HomeBloc extends ChangeNotifier{
     _subscription = wsRepository.onPricesChanged.listen((changes) { //OBTIENE LA KEY Y EL PRECIO
       state.mapOrNull(
         loaded: (state) {
-          final cryptos = [...state.crypto]; // SE CRE UNA NUEVA LISTA CON LAS VALORES
           final keys = changes.keys; //  OBTIENE LA KEY
-          for(int i = 0; i<cryptos.length; i++){
+
+          _state = state.copyWith(
+            crypto: [...state.crypto.map((crypto) {
+              if(keys.contains(crypto.id)){
+                return crypto.copyWith(
+                    price: changes[crypto.id]! //OBTIENE EL VALOR DEL PRECIO
+                );
+              }
+              return crypto;
+            }).toList()]
+          );
+
+          notifyListeners();
+
+         /*
+         List<Crypto> cryptos = [...state.crypto]; // SE CRE UNA NUEVA LISTA CON LAS VALORES
+         final keys = changes.keys;
+
+         for(int i = 0; i<cryptos.length; i++){
             final crypto = cryptos[i];
             if(keys.contains(crypto.id)){
               cryptos[i] = crypto.copyWith(
@@ -88,7 +107,7 @@ class HomeBloc extends ChangeNotifier{
           _state= state.copyWith(
             crypto: cryptos //ACTUALIZA LA LISTA
           );
-          notifyListeners();
+          notifyListeners();*/
         }
       );
     });
