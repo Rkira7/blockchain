@@ -20,21 +20,21 @@ mixin _$HomeState {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(HttpRequestFailure failure) failed,
-    required TResult Function(List<Crypto> crypto) loaded,
+    required TResult Function(List<Crypto> crypto, WsStatus wsStatus) loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -97,7 +97,7 @@ class __$$_LoadingCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Loading implements _Loading {
-  _$_Loading();
+  const _$_Loading();
 
   @override
   String toString() {
@@ -118,7 +118,7 @@ class _$_Loading implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(HttpRequestFailure failure) failed,
-    required TResult Function(List<Crypto> crypto) loaded,
+    required TResult Function(List<Crypto> crypto, WsStatus wsStatus) loaded,
   }) {
     return loading();
   }
@@ -128,7 +128,7 @@ class _$_Loading implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
   }) {
     return loading?.call();
   }
@@ -138,7 +138,7 @@ class _$_Loading implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -183,7 +183,7 @@ class _$_Loading implements _Loading {
 }
 
 abstract class _Loading implements HomeState {
-  factory _Loading() = _$_Loading;
+  const factory _Loading() = _$_Loading;
 }
 
 /// @nodoc
@@ -227,7 +227,7 @@ class __$$_FailedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_Failed implements _Failed {
-  _$_Failed(this.failure);
+  const _$_Failed(this.failure);
 
   @override
   final HttpRequestFailure failure;
@@ -259,7 +259,7 @@ class _$_Failed implements _Failed {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(HttpRequestFailure failure) failed,
-    required TResult Function(List<Crypto> crypto) loaded,
+    required TResult Function(List<Crypto> crypto, WsStatus wsStatus) loaded,
   }) {
     return failed(failure);
   }
@@ -269,7 +269,7 @@ class _$_Failed implements _Failed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
   }) {
     return failed?.call(failure);
   }
@@ -279,7 +279,7 @@ class _$_Failed implements _Failed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
     required TResult orElse(),
   }) {
     if (failed != null) {
@@ -324,7 +324,7 @@ class _$_Failed implements _Failed {
 }
 
 abstract class _Failed implements HomeState {
-  factory _Failed(final HttpRequestFailure failure) = _$_Failed;
+  const factory _Failed(final HttpRequestFailure failure) = _$_Failed;
 
   HttpRequestFailure get failure;
   @JsonKey(ignore: true)
@@ -336,7 +336,9 @@ abstract class _Failed implements HomeState {
 abstract class _$$_LoadedCopyWith<$Res> {
   factory _$$_LoadedCopyWith(_$_Loaded value, $Res Function(_$_Loaded) then) =
       __$$_LoadedCopyWithImpl<$Res>;
-  $Res call({List<Crypto> crypto});
+  $Res call({List<Crypto> crypto, WsStatus wsStatus});
+
+  $WsStatusCopyWith<$Res> get wsStatus;
 }
 
 /// @nodoc
@@ -351,20 +353,35 @@ class __$$_LoadedCopyWithImpl<$Res> extends _$HomeStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object? crypto = freezed,
+    Object? wsStatus = freezed,
   }) {
     return _then(_$_Loaded(
-      crypto == freezed
+      crypto: crypto == freezed
           ? _value._crypto
           : crypto // ignore: cast_nullable_to_non_nullable
               as List<Crypto>,
+      wsStatus: wsStatus == freezed
+          ? _value.wsStatus
+          : wsStatus // ignore: cast_nullable_to_non_nullable
+              as WsStatus,
     ));
+  }
+
+  @override
+  $WsStatusCopyWith<$Res> get wsStatus {
+    return $WsStatusCopyWith<$Res>(_value.wsStatus, (value) {
+      return _then(_value.copyWith(wsStatus: value));
+    });
   }
 }
 
 /// @nodoc
 
 class _$_Loaded implements _Loaded {
-  _$_Loaded(final List<Crypto> crypto) : _crypto = crypto;
+  const _$_Loaded(
+      {required final List<Crypto> crypto,
+      this.wsStatus = const WsStatus.connecting()})
+      : _crypto = crypto;
 
   final List<Crypto> _crypto;
   @override
@@ -374,8 +391,12 @@ class _$_Loaded implements _Loaded {
   }
 
   @override
+  @JsonKey()
+  final WsStatus wsStatus;
+
+  @override
   String toString() {
-    return 'HomeState.loaded(crypto: $crypto)';
+    return 'HomeState.loaded(crypto: $crypto, wsStatus: $wsStatus)';
   }
 
   @override
@@ -383,12 +404,15 @@ class _$_Loaded implements _Loaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_Loaded &&
-            const DeepCollectionEquality().equals(other._crypto, _crypto));
+            const DeepCollectionEquality().equals(other._crypto, _crypto) &&
+            const DeepCollectionEquality().equals(other.wsStatus, wsStatus));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_crypto));
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_crypto),
+      const DeepCollectionEquality().hash(wsStatus));
 
   @JsonKey(ignore: true)
   @override
@@ -400,9 +424,9 @@ class _$_Loaded implements _Loaded {
   TResult when<TResult extends Object?>({
     required TResult Function() loading,
     required TResult Function(HttpRequestFailure failure) failed,
-    required TResult Function(List<Crypto> crypto) loaded,
+    required TResult Function(List<Crypto> crypto, WsStatus wsStatus) loaded,
   }) {
-    return loaded(crypto);
+    return loaded(crypto, wsStatus);
   }
 
   @override
@@ -410,9 +434,9 @@ class _$_Loaded implements _Loaded {
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
   }) {
-    return loaded?.call(crypto);
+    return loaded?.call(crypto, wsStatus);
   }
 
   @override
@@ -420,11 +444,11 @@ class _$_Loaded implements _Loaded {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? loading,
     TResult Function(HttpRequestFailure failure)? failed,
-    TResult Function(List<Crypto> crypto)? loaded,
+    TResult Function(List<Crypto> crypto, WsStatus wsStatus)? loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(crypto);
+      return loaded(crypto, wsStatus);
     }
     return orElse();
   }
@@ -465,10 +489,406 @@ class _$_Loaded implements _Loaded {
 }
 
 abstract class _Loaded implements HomeState {
-  factory _Loaded(final List<Crypto> crypto) = _$_Loaded;
+  const factory _Loaded(
+      {required final List<Crypto> crypto,
+      final WsStatus wsStatus}) = _$_Loaded;
 
   List<Crypto> get crypto;
+  WsStatus get wsStatus;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$WsStatus {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() connecting,
+    required TResult Function() connected,
+    required TResult Function() failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Connecting value) connecting,
+    required TResult Function(_Connected value) connected,
+    required TResult Function(_WsStatusFailed value) failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $WsStatusCopyWith<$Res> {
+  factory $WsStatusCopyWith(WsStatus value, $Res Function(WsStatus) then) =
+      _$WsStatusCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$WsStatusCopyWithImpl<$Res> implements $WsStatusCopyWith<$Res> {
+  _$WsStatusCopyWithImpl(this._value, this._then);
+
+  final WsStatus _value;
+  // ignore: unused_field
+  final $Res Function(WsStatus) _then;
+}
+
+/// @nodoc
+abstract class _$$_ConnectingCopyWith<$Res> {
+  factory _$$_ConnectingCopyWith(
+          _$_Connecting value, $Res Function(_$_Connecting) then) =
+      __$$_ConnectingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ConnectingCopyWithImpl<$Res> extends _$WsStatusCopyWithImpl<$Res>
+    implements _$$_ConnectingCopyWith<$Res> {
+  __$$_ConnectingCopyWithImpl(
+      _$_Connecting _value, $Res Function(_$_Connecting) _then)
+      : super(_value, (v) => _then(v as _$_Connecting));
+
+  @override
+  _$_Connecting get _value => super._value as _$_Connecting;
+}
+
+/// @nodoc
+
+class _$_Connecting implements _Connecting {
+  const _$_Connecting();
+
+  @override
+  String toString() {
+    return 'WsStatus.connecting()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Connecting);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() connecting,
+    required TResult Function() connected,
+    required TResult Function() failed,
+  }) {
+    return connecting();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+  }) {
+    return connecting?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+    required TResult orElse(),
+  }) {
+    if (connecting != null) {
+      return connecting();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Connecting value) connecting,
+    required TResult Function(_Connected value) connected,
+    required TResult Function(_WsStatusFailed value) failed,
+  }) {
+    return connecting(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+  }) {
+    return connecting?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (connecting != null) {
+      return connecting(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Connecting implements WsStatus {
+  const factory _Connecting() = _$_Connecting;
+}
+
+/// @nodoc
+abstract class _$$_ConnectedCopyWith<$Res> {
+  factory _$$_ConnectedCopyWith(
+          _$_Connected value, $Res Function(_$_Connected) then) =
+      __$$_ConnectedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ConnectedCopyWithImpl<$Res> extends _$WsStatusCopyWithImpl<$Res>
+    implements _$$_ConnectedCopyWith<$Res> {
+  __$$_ConnectedCopyWithImpl(
+      _$_Connected _value, $Res Function(_$_Connected) _then)
+      : super(_value, (v) => _then(v as _$_Connected));
+
+  @override
+  _$_Connected get _value => super._value as _$_Connected;
+}
+
+/// @nodoc
+
+class _$_Connected implements _Connected {
+  const _$_Connected();
+
+  @override
+  String toString() {
+    return 'WsStatus.connected()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Connected);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() connecting,
+    required TResult Function() connected,
+    required TResult Function() failed,
+  }) {
+    return connected();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+  }) {
+    return connected?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+    required TResult orElse(),
+  }) {
+    if (connected != null) {
+      return connected();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Connecting value) connecting,
+    required TResult Function(_Connected value) connected,
+    required TResult Function(_WsStatusFailed value) failed,
+  }) {
+    return connected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+  }) {
+    return connected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (connected != null) {
+      return connected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Connected implements WsStatus {
+  const factory _Connected() = _$_Connected;
+}
+
+/// @nodoc
+abstract class _$$_WsStatusFailedCopyWith<$Res> {
+  factory _$$_WsStatusFailedCopyWith(
+          _$_WsStatusFailed value, $Res Function(_$_WsStatusFailed) then) =
+      __$$_WsStatusFailedCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_WsStatusFailedCopyWithImpl<$Res> extends _$WsStatusCopyWithImpl<$Res>
+    implements _$$_WsStatusFailedCopyWith<$Res> {
+  __$$_WsStatusFailedCopyWithImpl(
+      _$_WsStatusFailed _value, $Res Function(_$_WsStatusFailed) _then)
+      : super(_value, (v) => _then(v as _$_WsStatusFailed));
+
+  @override
+  _$_WsStatusFailed get _value => super._value as _$_WsStatusFailed;
+}
+
+/// @nodoc
+
+class _$_WsStatusFailed implements _WsStatusFailed {
+  const _$_WsStatusFailed();
+
+  @override
+  String toString() {
+    return 'WsStatus.failed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_WsStatusFailed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() connecting,
+    required TResult Function() connected,
+    required TResult Function() failed,
+  }) {
+    return failed();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+  }) {
+    return failed?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? connecting,
+    TResult Function()? connected,
+    TResult Function()? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Connecting value) connecting,
+    required TResult Function(_Connected value) connected,
+    required TResult Function(_WsStatusFailed value) failed,
+  }) {
+    return failed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+  }) {
+    return failed?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Connecting value)? connecting,
+    TResult Function(_Connected value)? connected,
+    TResult Function(_WsStatusFailed value)? failed,
+    required TResult orElse(),
+  }) {
+    if (failed != null) {
+      return failed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _WsStatusFailed implements WsStatus {
+  const factory _WsStatusFailed() = _$_WsStatusFailed;
 }
