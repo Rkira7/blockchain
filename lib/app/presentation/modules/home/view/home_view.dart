@@ -1,8 +1,5 @@
-import 'package:blockchain/app/domain/failures/http_request_failure.dart';
-
 import '../../../../domain/repositories/exchange_repository.dart';
 import '../bloc/home_bloc.dart';
-import '../bloc/home_state.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
