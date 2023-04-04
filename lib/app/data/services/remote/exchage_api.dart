@@ -25,7 +25,9 @@ class ExchangeAPI {
             (e) => Crypto(
                 id: e['id'],
                 symbol: e['symbol'],
-                price: double.parse(e['priceUsd']))
+                name: e['name'],
+                price: double.parse(e['priceUsd']),
+                changePercent24Hr: double.parse(e['changePercent24Hr'])),
         );
 
         return Either.right(cryptos.toList());

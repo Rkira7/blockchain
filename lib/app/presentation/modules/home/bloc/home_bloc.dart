@@ -19,7 +19,15 @@ class HomeBloc extends ChangeNotifier{
 
   HomeState get state => _state;
 
-  final _ids =  ['bitcoin', 'ethereum', 'litecoin','usd-coin', 'dogecoin'];
+  final _ids = [
+    'bitcoin',
+    'ethereum'
+    'tether',
+    'binance-coin',
+    'monero',
+    'litecoin',
+    'usd-coin',
+    'dogecoin'];
 
   Future<void> init()async{
     state.maybeWhen(

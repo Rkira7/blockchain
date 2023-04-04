@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'app/data/repositories_impl/ws_repository_impl.dart';
 import 'app/domain/repositories/ws_repository.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -12,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'app/my_app.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  Intl.defaultLocale = 'es_US';
   runApp(
     MultiProvider(
       providers: [
