@@ -79,9 +79,10 @@ class HomeBloc extends ChangeNotifier{
         loaded: (state) {
           final keys = changes.keys; //  OBTIENE LA KEY
 
+          //ACTUALIZA LA LISTA DE CRYPTOS
           _state = state.copyWith(
             crypto: [...state.crypto.map((crypto) {
-              if(keys.contains(crypto.id)){
+              if(keys.contains(crypto.id)){//BUSCA LA KEY EN LA LISTA DE IDS
                 return crypto.copyWith(
                     price: changes[crypto.id]! //OBTIENE EL VALOR DEL PRECIO
                 );
