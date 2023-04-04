@@ -1,6 +1,6 @@
-import 'package:blockchain/app/presentation/modules/home/view/widgets/app_bar.dart';
-import 'package:blockchain/app/presentation/modules/home/view/widgets/error.dart';
-import 'package:blockchain/app/presentation/modules/home/view/widgets/loaded.dart';
+import 'widgets/app_bar.dart';
+import 'widgets/error.dart';
+import 'widgets/loaded.dart';
 
 import '../../../../domain/repositories/exchange_repository.dart';
 import '../bloc/home_bloc.dart';
@@ -22,7 +22,7 @@ class HomeView extends StatelessWidget {
       builder: (context, _){
           final HomeBloc bloc = context.watch();
           return Scaffold(
-            appBar: HomeAppBar(),
+            appBar: const HomeAppBar(),
             body: bloc.state.map(
                 loading: (_) => const Center(child: CircularProgressIndicator()),
                 failed: (_) => const HomeError(),

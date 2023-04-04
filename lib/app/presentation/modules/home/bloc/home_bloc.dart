@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:blockchain/app/domain/models/crypto/crypto.dart';
+import '../../../../domain/models/ws_status/ws_status.dart';
 
 import '../../../../domain/repositories/ws_repository.dart';
 import '../../../../domain/repositories/exchange_repository.dart';
@@ -13,7 +13,7 @@ class HomeBloc extends ChangeNotifier{
   });
   final ExchangeRepository exchangeRepository;
   final WsRepository wsRepository;
-  StreamSubscription? _subscription;
+  StreamSubscription? _priccesSubscription, _wsSubscription;
 
   HomeState _state = const HomeState.loading();
 
@@ -73,8 +73,9 @@ class HomeBloc extends ChangeNotifier{
 
   //ACTUALIZA EL PRECIO DE LAS MONEDAS
   void _onPricesChanged(){
-    _subscription?.cancel();
-    _subscription = wsRepository.onPricesChanged.listen((changes) { //OBTIENE LA KEY Y EL PRECIO
+    _priccesSubscription?.cancel();
+    _wsSubscription?.cancel();
+    _priccesSubscription = wsRepository.onPricesChanged.listen((changes) { //OBTIENE LA KEY Y EL PRECIO
       state.mapOrNull(
         loaded: (state) {
           final keys = changes.keys; //  OBTIENE LA KEY
@@ -112,11 +113,21 @@ class HomeBloc extends ChangeNotifier{
         }
       );
     });
+
+    _wsSubscription = wsRepository.onStatusChanged.listen((status) {
+        state.mapOrNull(
+          loaded: (state) {
+            _state = state.copyWith(wsStatus: status);
+            notifyListeners();
+          }
+        );
+    });
   }
 
   @override
   void dispose() {
-    _subscription?.cancel();
+    _priccesSubscription?.cancel();
+    _wsSubscription?.cancel();
     super.dispose();
   }
 

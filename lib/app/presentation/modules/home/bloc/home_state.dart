@@ -1,3 +1,5 @@
+import 'package:blockchain/app/domain/models/ws_status/ws_status.dart';
+
 import '../../../../domain/failures/http_request_failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../../domain/models/crypto/crypto.dart';
@@ -16,10 +18,5 @@ class HomeState with _$HomeState{
 
 }
 
-@freezed
-class WsStatus with _$WsStatus{
-  const factory WsStatus.connecting() = _Connecting;
-  const factory WsStatus.connected() = _Connected;
-  const factory WsStatus.failed() = _WsStatusFailed;
-}
+
 
