@@ -27,18 +27,19 @@ class WsRepositoryImpl implements WsRepository {
   @override
   Future<bool> connect(List<String> ids) async {
     try{
+      //CAMBIA ESTADO EN EL APPBAR
       _notifyStatus(const WsStatus.connecting());
-      //VERIFICA LA CONEXION Y MANDA LOS IDS
+      //VERIFICA LA CONEXION Y MANDA LOS IDS A LA FUNCION builder
       _channel = builder(ids);
       await _channel!.ready;
 
-      //ESCUCHAR LOS CAMBIOS
+      //ESCUCHAR LOS CAMBIOS DE LA CHIPTOMONEDA
       _subscription = _channel!.stream.listen(
         (event) {
-          //CONVERTIR A MAP
+          //CONVERTIR A MAP DE LA CHIPTOMONEDA --{\"bitcoin\":\"28239.47\"}
           final map = Map<String, String>.from(jsonDecode(event));
 
-          //CAMBIAR UN MAP A OTRO MAP DOUBLE
+          //CAMBIAR EL VALOR DEL A DOUBLE
           final data = <String, double> {}..addEntries(
               map.entries.map((e) =>
                 MapEntry(e.key, double.parse(e.value)))
@@ -46,9 +47,10 @@ class WsRepositoryImpl implements WsRepository {
 
           //SI HAY UN ESCUCHA
           if(_priceController?.hasListener ?? false){
-            _priceController!.add(data);
+            _priceController!.add(data); //NOTIFICA AL listen DEL STREAM
           }
         },
+          //SI SE PERDIO LA CONEXION DEL SOCKET
         onDone: () => _reconnect(ids)
 
       );
@@ -70,6 +72,7 @@ class WsRepositoryImpl implements WsRepository {
   void _reconnect(List<String> ids){
     if(_subscription != null){
       _timer?.cancel();
+      //ESPERA EL TEIMPO PARA LA RECONEXION
       _timer = Timer(_reconnectDuration, (){
         connect(ids);
       });
@@ -78,6 +81,7 @@ class WsRepositoryImpl implements WsRepository {
     }
   }
 
+  //NOTIFICA EL ESTADO DEL SOCKET EN EL APPBAR
   void _notifyStatus(WsStatus status){
     if(_subscription == null){
       return;
@@ -88,6 +92,7 @@ class WsRepositoryImpl implements WsRepository {
     }
   }
 
+  //SE DESUSCRIBE DE TODOS LOS OYENTES
   @override
   Future<void> disconnect() async{
     _timer?.cancel();

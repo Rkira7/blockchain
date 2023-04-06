@@ -29,7 +29,10 @@ class HomeBloc extends ChangeNotifier{
     'usd-coin',
     'dogecoin'];
 
+  //INICIALIZA AL HACER LA INSTANCIA
   Future<void> init()async{
+    //INICIALIZA EL PRIMER ESTADO
+    //EL LOAFING HACE QUE NOTIFIQUE Y MUETRE EL PROGRESS
     state.maybeWhen(
         loading: () {},
         orElse: () {
@@ -38,8 +41,10 @@ class HomeBloc extends ChangeNotifier{
         }
     );
 
+    //OBTIENE EL RESULTADO DE LA API
    final result = await exchangeRepository.getPrices(_ids);
 
+    //result ES DE TIPO GetPriceFuture QUE EXTIENDE DE Either<L,R>
     _state = result.when(
         left: (failure) => HomeState.failed(failure),
         right: (crypto) {
@@ -62,6 +67,7 @@ class HomeBloc extends ChangeNotifier{
         loaded: (state){
           //SI LA CONEXION ES CORRECTA
           if(connected){
+            //ACTUALIZAR EL PRECIO
             _onPricesChanged();
           }
           //VALIDA EL ESTADO DE LA CONECCION TRUE O FALSE
@@ -79,16 +85,20 @@ class HomeBloc extends ChangeNotifier{
     return connected;
   }
 
-  //ACTUALIZA EL PRECIO DE LAS MONEDAS
+  //ACTUALIZA EL PRECIO DE LAS MONEDAS CON EL SOCKET
   void _onPricesChanged(){
     _priccesSubscription?.cancel();
     _wsSubscription?.cancel();
+    //ESPERA EL CAMBIO DEL STREAM PARA NOTIFICAR A LA VISTA Y CAMBIAR LOS PRECIOS
     _priccesSubscription = wsRepository.onPricesChanged.listen((changes) { //OBTIENE LA KEY Y EL PRECIO
       state.mapOrNull(
         loaded: (state) {
           final keys = changes.keys; //  OBTIENE LA KEY
 
-          //ACTUALIZA LA LISTA DE CRYPTOS
+          //ACTUALIZA LA LISTA DE CRYPTOS DEPENDIENDO DE LOS CAMBIOS
+          //RECORRE LA LISA DE LAS CRYPTO
+            //"bitcoin" -> 28224.94
+            //"binance-coin" -> 314.83
           _state = state.copyWith(
             crypto: [...state.crypto.map((crypto) {
               if(keys.contains(crypto.id)){//BUSCA LA KEY EN LA LISTA DE IDS
@@ -100,6 +110,7 @@ class HomeBloc extends ChangeNotifier{
             }).toList()]
           );
 
+          //NOTIFICA LOS ESCUCHAS
           notifyListeners();
 
          /*
@@ -122,6 +133,7 @@ class HomeBloc extends ChangeNotifier{
       );
     });
 
+    //ESPERA EL CAMBIO DEL STREAM PARA NOTIFICAR A LA VISTA PARA EL APPBAR
     _wsSubscription = wsRepository.onStatusChanged.listen((status) {
         state.mapOrNull(
           loaded: (state) {

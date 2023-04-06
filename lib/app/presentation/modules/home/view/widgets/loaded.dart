@@ -22,7 +22,7 @@ class HomeLoaded extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final  HomeBloc bloc = context.watch();
+    final  HomeBloc bloc = context.watch(); //HEREDA DEL HomeState
     final state = bloc.state;
     
     return state.maybeMap(

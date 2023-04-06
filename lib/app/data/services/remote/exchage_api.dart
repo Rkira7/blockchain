@@ -9,18 +9,21 @@ import '../../../domain/models/crypto/crypto.dart';
 import 'package:http/http.dart';
 
 class ExchangeAPI {
-  Client _client;
-
   ExchangeAPI(this._client);
+  final Client _client;
 
+  //CONSUMO DE LA API DE CRIPTOMONEDAS
   GetPriceFuture getPrices(List<String> ids) async {
     try {
       final response = await _client.get(
           Uri.parse(
           "https://api.coincap.io/v2/assets?ids=${ids.join(",")}")
       );
+
+      //RESPUESTA CORRECTA
       if(response.statusCode == 200){
         final json = jsonDecode(response.body);
+        //CREA UNA LISTA CON LAS
         final cryptos =  (json['data'] as List).map(
             (e) => Crypto(
                 id: e['id'],
@@ -33,6 +36,7 @@ class ExchangeAPI {
         return Either.right(cryptos.toList());
       }
 
+      //RESPUESTAS ERRONEAS
       if(response.statusCode == 404){
         throw HttpRequestFailure.notFound();
       }

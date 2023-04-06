@@ -19,16 +19,26 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        //INSTANCIA PARA LA API
         Provider<ExchangeRepository>(
           create: (_) => ExchangeRepositoryImpl(
             ExchangeAPI(Client())
           ),),
 
-        //SE CREA LA INSTANCIA CON EL ESTAO DEL A CONEXION
+
+        //SE CREA LA INSTANCIA CON EL ESTADO DEL A CONEXION AL SOCKET
         Provider<WsRepository>(
             create: (_) => WsRepositoryImpl(
                 (ids) => WebSocketChannel.connect(
-                    Uri.parse('wss://ws.coincap.io/prices?assets=${ids.join(',')}'))))
+                    Uri.parse('wss://ws.coincap.io/prices?assets=${ids.join(',')}')),
+                const Duration(seconds: 10)
+            ))
+
+        /* LO MISMO
+        WebSocketChannel socket(List<String> ids){
+          return WebSocketChannel.connect(Uri.parse('wss://ws.coincap.io/prices?assets=${ids.join(',')}'))
+        }
+         */
 
       ],
       child: const MyApp()),

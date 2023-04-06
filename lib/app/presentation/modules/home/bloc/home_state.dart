@@ -1,4 +1,4 @@
-import 'package:blockchain/app/domain/models/ws_status/ws_status.dart';
+import '../../../../domain/models/ws_status/ws_status.dart';
 
 import '../../../../domain/failures/http_request_failure.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

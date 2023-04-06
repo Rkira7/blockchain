@@ -13,21 +13,20 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ExchangeRepository repository = context.read();
     return ChangeNotifierProvider(
         create: (_) => HomeBloc(
             exchangeRepository: context.read(),
-          wsRepository: context.read()
-        )..init(), //LLAMA AL METODO
-      builder: (context, _){
+            wsRepository: context.read()
+        )..init(), //LLAMA AL METODO PARA INICIALIZAR LA PETICION Y EL SOCKET
+        builder: (context, _){
           final HomeBloc bloc = context.watch();
           return Scaffold(
             backgroundColor: const Color(0xffF2F5F8),
             appBar: const HomeAppBar(),
             body: bloc.state.map(
-                loading: (_) => const Center(child: CircularProgressIndicator()),
-                failed: (_) => const HomeError(),
-                loaded: (_) => const HomeLoaded())
+                loading: (_) => const Center(child: CircularProgressIndicator()),//MOSTRAR PROGRESS
+                failed: (_) => const HomeError(), // ERROR
+                loaded: (_) => const HomeLoaded()) // CONTENIDO
           );
       },
     );

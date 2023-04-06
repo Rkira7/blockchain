@@ -8,6 +8,7 @@ class HomeAppBar extends StatelessWidget with PreferredSizeWidget{
 
   @override
   Widget build(BuildContext context) {
+    //ESCUCHA DEL APPBAR
     final HomeBloc bloc = context.watch();
     return AppBar(
       title: bloc.state.mapOrNull(
